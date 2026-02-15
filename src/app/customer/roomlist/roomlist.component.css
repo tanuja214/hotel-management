@@ -1,0 +1,13 @@
+table {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+th, td {
+	border: 1px solid #eee;
+	padding: 8px;
+}
+
+button[disabled] {
+	opacity: 0.5;
+}

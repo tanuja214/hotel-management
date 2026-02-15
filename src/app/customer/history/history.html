@@ -1,0 +1,15 @@
+<div class="history">
+	<h2>Booking History</h2>
+	<table>
+		<thead>
+			<tr><th>Room</th><th>Price</th><th>Date</th></tr>
+		</thead>
+		<tbody>
+			<tr *ngFor="let b of bookings">
+				<td>{{ b.roomType }}</td>
+				<td>{{ b.price | currency }}</td>
+				<td>{{ b.date | date:'short' }}</td>
+			</tr>
+		</tbody>
+	</table>
+</div>

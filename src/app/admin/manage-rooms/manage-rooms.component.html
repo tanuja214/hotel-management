@@ -1,0 +1,33 @@
+<div class="manage-rooms">
+	<h2>Manage Rooms (Admin)</h2>
+
+	<form (ngSubmit)="addRoom()" #roomForm="ngForm">
+		<div>
+			<label>Type</label>
+			<input name="type" required [(ngModel)]="newRoom.type" />
+		</div>
+		<div>
+			<label>Price</label>
+			<input name="price" type="number" required [(ngModel)]="newRoom.price" />
+		</div>
+		<div>
+			<label>Available</label>
+			<input name="availableRooms" type="number" [(ngModel)]="newRoom.availableRooms" />
+		</div>
+		<button type="submit">Add Room</button>
+	</form>
+
+	<h3>Current Rooms</h3>
+	<table>
+		<thead>
+			<tr><th>Type</th><th>Price</th><th>Available</th></tr>
+		</thead>
+		<tbody>
+			<tr *ngFor="let r of rooms">
+				<td>{{ r.type }}</td>
+				<td>{{ r.price }}</td>
+				<td>{{ r.availableRooms }}</td>
+			</tr>
+		</tbody>
+	</table>
+</div>

@@ -1,0 +1,17 @@
+nav.site-nav {
+	display: flex;
+	gap: 8px;
+	align-items: center;
+	padding: 8px;
+}
+
+.nav-sep {
+	color: #666;
+	margin: 0 4px;
+}
+
+a[routerLink] {
+	text-decoration: none;
+	color: #0366d6;
+}
+

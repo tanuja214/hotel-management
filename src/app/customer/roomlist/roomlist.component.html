@@ -1,0 +1,18 @@
+<div class="room-list">
+	<h2>Available Rooms</h2>
+	<table>
+		<thead>
+			<tr><th>Type</th><th>Price</th><th>Available</th><th></th></tr>
+		</thead>
+		<tbody>
+			<tr *ngFor="let r of rooms">
+				<td>{{ r.type }}</td>
+				<td>{{ r.price | currency }}</td>
+				<td>{{ r.availableRooms }}</td>
+				<td>
+					<button (click)="book(r.id)" [disabled]="r.availableRooms === 0">Book</button>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
