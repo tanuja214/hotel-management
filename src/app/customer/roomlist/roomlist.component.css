@@ -1,13 +1,44 @@
-table {
-	width: 100%;
-	border-collapse: collapse;
+.page { padding: 16px; }
+.title { margin: 12px 0 14px; font-size: 28px; }
+
+.table-wrap {
+  overflow-x: auto;
+  background: #fff;
+  border: 1px solid #e7e7e7;
+  border-radius: 10px;
 }
 
-th, td {
-	border: 1px solid #eee;
-	padding: 8px;
+.rooms-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 650px;
 }
 
-button[disabled] {
-	opacity: 0.5;
+.rooms-table th,
+.rooms-table td {
+  padding: 12px 14px;
+  border-bottom: 1px solid #efefef;
+  text-align: left;
 }
+
+.rooms-table thead th {
+  background: #f7f9fc;
+  font-weight: 600;
+}
+
+.btn {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 8px;
+  background: #1f6feb;
+  color: #fff;
+  cursor: pointer;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.muted { margin-top: 10px; color: #666; }
+.error { margin-top: 10px; color: #b00020; }

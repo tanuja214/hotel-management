@@ -1,27 +1,71 @@
-<div class="register-container">
-	<h2>Customer Registration</h2>
+<div class="auth-wrap">
+  <div class="auth-card">
+    <h2>Hotel Registration</h2>
 
-	<form (ngSubmit)="onRegister()" #regForm="ngForm">
-		<div>
-			<label for="name">Name</label>
-			<input id="name" name="name" required [(ngModel)]="model.name" />
-		</div>
+    <form (ngSubmit)="registerUser()">
 
-		<div>
-			<label for="email">Email</label>
-			<input id="email" name="email" type="email" required [(ngModel)]="model.email" />
-		</div>
+      <label>Full Name</label>
+      <input
+        type="text"
+        name="fullName"
+        [(ngModel)]="registrationDetails.fullName"
+        required />
 
-		<div>
-			<label for="password">Password</label>
-			<input id="password" name="password" type="password" required [(ngModel)]="model.password" />
-		</div>
+      <label>Email</label>
+      <input
+        type="email"
+        name="email"
+        [(ngModel)]="registrationDetails.email"
+        required />
 
-		<div class="actions">
-			<button type="submit">Register</button>
-			<a routerLink="/auth/login" class="login-link">Already have an account? Login</a>
-		</div>
-	</form>
+      <label>Password</label>
+      <input
+        type="password"
+        name="password"
+        [(ngModel)]="registrationDetails.password"
+        required />
 
-	<p class="message">{{ message }}</p>
+      <button type="submit">Register</button>
+
+    </form>
+
+    <hr />
+
+    <h3>Generate Random Number</h3>
+    <button (click)="generateRandom()">Generate</button>
+    <p>{{ randomNumber }}</p>
+
+    <hr />
+
+    <h3>Add Branch</h3>
+
+    <input
+      placeholder="Branch Name"
+      [(ngModel)]="branchDetails.branchName"
+      name="branchName" />
+
+    <input
+      placeholder="Address"
+      [(ngModel)]="branchDetails.address"
+      name="address" />
+
+    <input
+      placeholder="Rating"
+      [(ngModel)]="branchDetails.rating"
+      name="rating" />
+
+    <button (click)="addBranch()">Add Branch</button>
+
+    <h4>Branch List</h4>
+    <ul>
+      <li *ngFor="let branch of branchList">
+        {{ branch.branch_name }} - {{ branch.address }} ({{ branch.rating }})
+      </li>
+    </ul>
+
+    <p>
+      Already have account?
+      <a routerLink="/auth/login">Login</a>
+    </p>
+  </div>
 </div>

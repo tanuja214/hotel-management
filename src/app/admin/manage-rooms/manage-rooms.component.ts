@@ -1,42 +1,50 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { RoomService } from '../../core/services/room.service';
-import { Room } from '../../core/models/room.model';
 
 @Component({
-  
-  selector: 'app-manage-rooms',
   standalone: true,
+  selector: 'app-manage-rooms',
   imports: [CommonModule, FormsModule],
   templateUrl: './manage-rooms.component.html',
   styleUrls: ['./manage-rooms.component.css']
 })
-export class ManageRoomsComponent {
-  rooms: Room[] = [];
+export class ManageRoomsComponent implements OnInit {
 
-  newRoom: Partial<Room> = {
+  rooms: any[] = [];
+
+  newRoom = {
     type: '',
     price: 0,
-    availableRooms: 1
+    availableRooms: 0
   };
 
-  constructor(private roomService: RoomService) {
-    this.rooms = this.roomService.getRooms();
+  ngOnInit(): void {
+    this.rooms = [
+      { type: 'Single Room', price: 1000, availableRooms: 5 },
+      { type: 'Double Room', price: 2000, availableRooms: 3 },
+      { type: 'Suite Room', price: 4000, availableRooms: 2 }
+    ];
   }
 
   addRoom() {
-    if (!this.newRoom.type || !this.newRoom.price) return;
+    if (
+      this.newRoom.type &&
+      this.newRoom.price > 0 &&
+      this.newRoom.availableRooms >= 0
+    ) {
+      this.rooms.push({ ...this.newRoom });
 
-    const room: Room = {
-      id: Date.now(),
-      type: this.newRoom.type!,
-      price: Number(this.newRoom.price),
-      availableRooms: Number(this.newRoom.availableRooms) || 0
-    };
+      // Reset form
+      this.newRoom = {
+        type: '',
+        price: 0,
+        availableRooms: 0
+      };
+    }
+  }
 
-    this.roomService.addRoom(room);
-    this.rooms = this.roomService.getRooms();
-    this.newRoom = { type: '', price: 0, availableRooms: 1 };
+  get sortedRooms() {
+    return [...this.rooms].sort((a, b) => a.price - b.price);
   }
 }

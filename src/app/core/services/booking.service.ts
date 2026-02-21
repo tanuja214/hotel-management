@@ -1,21 +1,30 @@
 import { Injectable } from '@angular/core';
-import { Booking } from '../models/booking.model';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
+import { Observable } from 'rxjs';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class BookingService {
-  private bookings: Booking[] = [];
 
-  addBooking(booking: Booking) {
-    this.bookings.push(booking);
+  private baseUrl = environment.apiUrl;
+
+  constructor(private http: HttpClient) {}
+
+  private headers() {
+    return new HttpHeaders({
+      'ngrok-skip-browser-warning': 'true'
+    });
   }
 
-  getBookings(): Booking[] {
-    return this.bookings;
+  createBooking(payload: any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/booking/create`, payload, {
+      headers: this.headers()
+    });
   }
 
-  getBookingsByUser(userId: number): Booking[] {
-    return this.bookings.filter(b => b.userId === userId);
+  getBookingsByUser(userId: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/booking/user/${userId}`, {
+      headers: this.headers()
+    });
   }
 }

@@ -1,30 +1,24 @@
 import { Injectable } from '@angular/core';
-import { Room } from '../models/room.model';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
+import { Observable } from 'rxjs';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class RoomService {
 
-  private rooms: Room[] = [
-    { id: 1, type: 'Single', price: 50, availableRooms: 5 },
-    { id: 2, type: 'Double', price: 80, availableRooms: 3 },
-    { id: 3, type: 'Suite', price: 150, availableRooms: 2 }
-  ];
+  private baseUrl = environment.apiUrl;
 
-  getRooms(): Room[] {
-    return this.rooms;
+  constructor(private http: HttpClient) {}
+
+  private headers() {
+    return new HttpHeaders({
+      'ngrok-skip-browser-warning': 'true'
+    });
   }
 
-  addRoom(room: Room) {
-    this.rooms.push(room);
-  }
-
-  bookRoom(roomId: number) {
-    const room = this.rooms.find(r => r.id === roomId);
-
-    if (room && room.availableRooms > 0) {
-      room.availableRooms--;
-    }
+  getRooms(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/room/all`, {
+      headers: this.headers()
+    });
   }
 }
