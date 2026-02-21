@@ -1,31 +1,30 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BookingService } from '../../core/services/booking.service';
-import { RoomService } from '../../core/services/room.service';
 
 @Component({
-  standalone: true,
   selector: 'app-history',
+  standalone: true,
   imports: [CommonModule],
-  templateUrl: './history.html',
-  styleUrls: ['./history.css'],
+  templateUrl: './history.html'
 })
-export class HistoryComponent {
-  bookings = [] as any[];
+export class HistoryComponent implements OnInit {
 
-  constructor(private bookingService: BookingService, private roomService: RoomService) {
-    this.load();
-  }
+  bookings: any[] = [];
 
-  load() {
-    const b = this.bookingService.getBookings();
-    this.bookings = b.map(x => {
-      const room = this.roomService.getRooms().find(r => r.id === x.roomId);
-      return {
-        ...x,
-        roomType: room?.type || 'Unknown',
-        price: room?.price || 0
-      };
+  constructor(private bookingService: BookingService) {}
+
+  ngOnInit(): void {
+    const userId = Number(localStorage.getItem('userId'));
+
+    this.bookingService.getBookingsByUser(userId).subscribe({
+      next: (data) => {
+        console.log("Booking history:", data);
+        this.bookings = data;
+      },
+      error: (err) => {
+        console.error("History error:", err);
+      }
     });
   }
 }

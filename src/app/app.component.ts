@@ -6,13 +6,13 @@ import { RouterOutlet, RouterLink } from '@angular/router';
   standalone: true,
   imports: [RouterOutlet, RouterLink],
   template: `
-    <nav>
-      <a routerLink="/auth/register">Register</a> |
-      <a routerLink="/auth/login">Login</a> |
-      <a routerLink="/admin">Admin</a> |
-      <a routerLink="/customer">Customer</a> |
-       <a routerLink="/customer/history">History</a>
+    <nav style="padding:10px; background:#1976d2;">
+      <a routerLink="/login" style="color:white; margin-right:15px;">Login</a>
+      <a routerLink="/register" style="color:white; margin-right:15px;">Register</a>
+      <a routerLink="/rooms" style="color:white; margin-right:15px;">Customer</a>
+      <a routerLink="/history" style="color:white;">History</a>
     </nav>
+
     <router-outlet></router-outlet>
   `
 })

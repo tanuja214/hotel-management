@@ -1,39 +1,56 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
-import { User } from '../models/user.model';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable, catchError, throwError, tap } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  private users: User[] = [];
+  private baseUrl = environment.apiUrl;
 
-  private currentUserSubject = new BehaviorSubject<User | null>(null);
-  currentUser$ = this.currentUserSubject.asObservable();
+  constructor(private http: HttpClient) {}
 
-  register(user: User) {
-    this.users.push(user);
+  private getNgrokHeaders(): HttpHeaders {
+    return new HttpHeaders({
+      'ngrok-skip-browser-warning': 'true'
+    });
   }
 
-  login(email: string, password: string) {
-    const user = this.users.find(
-      u => u.email === email && u.password === password
+  login(data: any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/auth/login`, data, {
+      headers: this.getNgrokHeaders()
+    }).pipe(
+      tap((response: any) => {
+        // Save userId after login
+        if (response?.userId) {
+          localStorage.setItem('userId', response.userId);
+        }
+      }),
+      catchError((error) => {
+        console.error('AuthService - login error:', error);
+        return throwError(() => error);
+      })
     );
+  }
 
-    if (user) {
-      this.currentUserSubject.next(user);
-      return true;
-    }
-
-    return false;
+  register(data: any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/auth/register`, data, {
+      headers: this.getNgrokHeaders()
+    }).pipe(
+      catchError((error) => {
+        console.error('AuthService - register error:', error);
+        return throwError(() => error);
+      })
+    );
   }
 
   logout() {
-    this.currentUserSubject.next(null);
+    localStorage.removeItem('userId');
   }
 
-  getCurrentUser() {
-    return this.currentUserSubject.value;
+  isLoggedIn(): boolean {
+    return !!localStorage.getItem('userId');
   }
 }

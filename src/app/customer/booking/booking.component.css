@@ -1,0 +1,26 @@
+/* Container spacing */
+.container {
+  max-width: 1000px;
+}
+
+/* Table styling */
+.table {
+  box-shadow: 0 0 15px rgba(0,0,0,0.1);
+}
+
+.table th, .table td {
+  text-align: center;
+  vertical-align: middle;
+}
+
+/* Hover effect for rows */
+.table-hover tbody tr:hover {
+  background-color: rgba(0, 123, 255, 0.1);
+  cursor: pointer;
+}
+
+/* Alert styling */
+.alert {
+  font-size: 1.1rem;
+  margin-top: 20px;
+}

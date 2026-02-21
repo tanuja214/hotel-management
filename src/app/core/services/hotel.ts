@@ -4,16 +4,20 @@ import { Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class HotelService {
- 
+
   private baseUrl = 'https://YOUR-NGROK-LINK.ngrok-free.app/api';
 
   constructor(private http: HttpClient) {}
 
-  getAvailableRooms(): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}/rooms/available`);
+  getAvailableRooms(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/rooms/available`);
   }
 
-  createBooking(payload: { userId: number; roomId: number; bookingDate: string }): Observable<any> {
-    return this.http.post<any>(`${this.baseUrl}/bookings`, payload);
+  createBooking(payload: {
+    userId: number;
+    roomId: number;
+    bookingDate: string;
+  }): Observable<any> {
+    return this.http.post(`${this.baseUrl}/bookings`, payload);
   }
 }
